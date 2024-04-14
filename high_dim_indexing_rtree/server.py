@@ -20,7 +20,7 @@ IMAGES_DIR = 'Data/Images/'
 #load the data
 points = np.load('Data/features.npy')
 img_files = pd.read_csv('Data/mapping.csv')
-insert_count = 100
+insert_count = 7000
 dim = points.shape[2]   ##
 print(f'Dimension: {dim}')
 
@@ -36,11 +36,12 @@ idx = index.Index(properties=p)
 for i in tqdm(range(insert_count)):
     idx.insert(i, tuple(points[i][0]))
     
-match_count = 5
+match_count = 1
 def get_matched_images(query_vector):
     nearest = list(idx.nearest(tuple(query_vector), match_count))
     matched_imgs = []
     for i in range(match_count):
+        print(nearest[i])
         matched_imgs.append(IMAGES_DIR+img_files.iloc[nearest[i]]['filename'])
     return matched_imgs
     
